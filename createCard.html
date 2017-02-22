@@ -108,11 +108,11 @@
                             <textarea class="form-control" rows="5" id="answer-1-hint"></textarea>
 
                             <label for="answer-1-url">Answer URL:</label>
-                            <input class="form-control" rows="5" id="answer-1-url"></input>
+                            <input class="form-control" id="answer-1-url">
 
                             <label>Is the answer correct? (for Multiple Choice cards!)</label><br/>
-                            <label class="radio-inline"><input type="radio" name="answer-1-optCorrect">Correct</label>
-                            <label class="radio-inline"><input type="radio" name="answer-1-optFalse">False</label>
+                            <label class="radio-inline"><input type="radio" name="answer-1-correct">Correct</label>
+                            <label class="radio-inline"><input type="radio" name="answer-1-correct">False</label>
                             <hr>
                         </div>
 
@@ -124,15 +124,30 @@
                         <button type="button" class="btn btn-primary btn-sm" id="addAnswerTemplate">Add another Answer
                         </button>
                     </div>
-
                     &nbsp;
+                    <h3 class="sub-heading">Additional information:</h3>
+                    <div id="others">
+                        <label>Tags</label><br/>
+                        <input class="form-control" id="tags-input">
+                        <label>Is the card a multiple choice card?</label><br/>
+                        <label class="radio-inline"><input type="radio" name="multichoice-option">Yes</label>
+                        <label class="radio-inline"><input type="radio" name="multichoice-option">No</label>
+                        &nbsp;
+
+                    </div>
+                    &nbsp;
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default btn-lg disabled" id="saveFormButton">Save
+                        </button>
+                    </div>
                 </div>
+                &nbsp;
 
             </div>
 
             <div class="blog-post">
 
-                <h2 class="blog-post-title">Introduction</h2>
+                <h2 class="blog-post-title">Preview</h2>
                 <pre><code class="json">{"rating": 0,
     "question": {
       "questionText": "hello world!",
