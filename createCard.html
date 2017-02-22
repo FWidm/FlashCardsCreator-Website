@@ -1,0 +1,191 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]--><!--navbar-inverse-->
+<div id="warning" class="alert alert-danger" role="alert">
+    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img id="img-logo" src="img/flash_icon_250.png">
+            <a class="navbar-brand" href="#">FlashCards Creator</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-header pull-right">
+                <ul class="nav navbar-nav pull-left">
+                    <li>
+                        <a id="show-profile" href="#">Hi, anon!</a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" role="form">
+                    <button type="submit" id="buttonLogout" class="btn btn-success">Log out</button>
+                </form>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">Create a new Card</h1>
+        <p class="lead blog-description">Simple way to create a new Card on your webbrowser.</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+            <hr>
+
+            <div class="blog-post">
+                <h2 class="blog-post-title">Introduction</h2>
+
+                <p>A FlashCard has many attributes you might want to fill. It can be split into three major parts. First
+                    one being the question. It consists of a text that contains the question, can contain an URI you
+                    want to link to such as a picture. Second is a list of Answers. Those can contain one text, one
+                    hint, an URI and you can specify if it is correct when the question is multiple choice. Last but not
+                    least you can specify tags to the card.</p>
+                <hr>
+                <h2 class="blog-post-title">Creation:</h2>
+
+                <div class="form-group">
+                    <h3 class="sub-heading">Question</h3>
+                    <label for="question">Question text:</label>
+                    <textarea class="form-control" rows="5" id="question"></textarea>
+
+                    <label for="question-url">Question URL:</label>
+                    <input class="form-control" rows="5" id="question-url"></input>
+
+                    <hr>
+                    <!--Contains all answers,-->
+                    <h3 class="sub-heading">Answers</h3>
+                    <div id="answers">
+                        <div id="answer-1">
+                            <h4 class="sub-heading">Answer 1:</h4>
+                            <label for="answer-1-text">Answer text:</label>
+                            <textarea class="form-control" rows="5" id="answer-1-text"></textarea>
+
+                            <label for="answer-1-hint">Answer hint text:</label>
+                            <textarea class="form-control" rows="5" id="answer-1-hint"></textarea>
+
+                            <label for="answer-1-url">Answer URL:</label>
+                            <input class="form-control" rows="5" id="answer-1-url"></input>
+
+                            <label>Is the answer correct? (for Multiple Choice cards!)</label><br/>
+                            <label class="radio-inline"><input type="radio" name="answer-1-optCorrect">Correct</label>
+                            <label class="radio-inline"><input type="radio" name="answer-1-optFalse">False</label>
+                            <hr>
+                        </div>
+
+
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-danger btn-sm disabled" id="deleteAnswerTemplate">Delete last Answer
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" id="addAnswerTemplate">Add another Answer
+                        </button>
+                    </div>
+
+                    &nbsp;
+                </div>
+
+            </div>
+
+            <div class="blog-post">
+
+                <h2 class="blog-post-title">Introduction</h2>
+                <pre><code class="json">{"rating": 0,
+    "question": {
+      "questionText": "hello world!",
+      "mediaURI": "www.google.de",
+      "author": {
+        "userId": 1
+      }
+    },
+    "answers": [
+      {
+        "answerText": "answer",
+        "answerHint": "hintasfdqwrgwwbrgeqqbreasbasbfabfs",
+        "mediaURI": "www.answer.com",
+        "author": {
+            "userId":1
+        },
+        "answerCorrect": true
+      }
+    ],
+    "author": {
+      "userId": 1
+    },
+    "multipleChoice": false,
+    "marked": false,
+    "selected": false,
+    "tags":[{
+        "tagId":1
+    }]}</code></pre>
+            </div><!-- /.blog-post -->
+
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Quicklinks</h4>
+                <ol class="list-unstyled">
+                    <li><a href="#">Create Cards</a></li>
+                    <li><a href="#">Created Decks</a></li>
+                    <li><a href="#">Create Categories</a></li>
+                </ol>
+            </div>
+        </div><!-- /.blog-sidebar -->
+
+    </div><!-- /.row -->
+
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
+
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/flashcardcreator.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

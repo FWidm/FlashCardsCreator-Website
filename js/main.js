@@ -51,6 +51,8 @@ $(function () {
 $(function () {
     $("#buttonLogout").click(function () {
         deleteCookie(emailCookieName);
+        deleteCookie(tokenCookieName);
+        //todo: logout from the api.
         window.location.href = "login.html";
     })
 });
