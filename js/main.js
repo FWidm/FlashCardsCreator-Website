@@ -1,6 +1,9 @@
 const ip = "localhost";
 const port = "9000";
 const emailCookieName = "userEmail";
+const tokenCookieName = "userToken";
+
+const cookieDuration = 100;
 
 //disable cache for REST calls globally
 $.ajaxSetup({cache: false});
@@ -10,14 +13,14 @@ $(document).ready(function () {
     console.log("ready! loc=" + window.location.pathname);
     getHeartbeat();
 
-    var cookie = readCookie(emailCookieName);
+    var cookie = getCookie(emailCookieName);
     console.log(cookie);
     if (!cookie && window.location.pathname != '/FlashCardsCreator/login.html') {
         console.log("Redirect to login!");
         window.location.href = "login.html";
     }
     else
-        $("#show-profile").text("Hi, " + readCookie(emailCookieName));
+        $("#show-profile").text("Hi, " + getCookie(emailCookieName));
 
 });
 
@@ -32,13 +35,14 @@ $(function () {
             if (email.length <= 0 || password.length <= 0)
                 console.log("Password or email is not set, please try again")
             else {
-                if (checkCredentials(email, password)) {
-                    var days = 10;
-                    createCookie(emailCookieName, email, days);
-                    //create cookie for token
+                if (getCookie(tokenCookieName) && getCookie(emailCookieName)) {
                     window.location.href = "index.html";
-                }
 
+                }
+                else {
+                    checkCredentials(email, password);
+
+                }
             }
         }
     );
@@ -53,29 +57,29 @@ $(function () {
 
 
 function checkCredentials(email, password) {
-    var credentials = new Object();
-    credentials.email = email;
-    credentials.password = password;
-    console.log(credentials);
+    var json = JSON.stringify({"email": email, "password": password});
+    console.log(json);
     jQuery.ajax({
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        'type': 'POST',
-        'url': "http://" + ip + ":" + port + "/login",
-        'data': credentials,
-        'dataType': 'json',
-        'success': function (data, status, jqXHR) {
+        type: 'POST',
+        url: "http://" + ip + ":" + port + "/login",
+        data: json,
+        dataType: 'json',
+        success: function (data, status, jqXHR) {
             console.log("status=" + status);
-            console.log("data=" + data.currentDate)
+            console.log(jqXHR);
+            createCookie(tokenCookieName, data.token, cookieDuration);
+            createCookie(emailCookieName, email, cookieDuration);
+            window.location.href = "index.html";
         },
-        'error': function (jqXHR, status) {
+        error: function (jqXHR, status) {
             console.log("status=" + status);
 
             console.log(jqXHR.responseText);
         },
-        'contentType': "application/json"
+        contentType: "application/json"
 
     });
 
@@ -91,7 +95,7 @@ function getHeartbeat() {
         success: function (data, status, jqXHR) {
             console.log("status=" + status);
             console.log("data=" + data.currentDate);
-            if($("#server-status").hasClass("glyphicon")){
+            if ($("#server-status").hasClass("glyphicon")) {
                 $("#server-status").addClass("glyphicon-globe");
                 $("#server-status").removeClass("glyphicon-remove");
             }
@@ -132,7 +136,7 @@ function createCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
-function readCookie(name) {
+function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
