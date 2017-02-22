@@ -1,5 +1,16 @@
 .form-signin {
-    max-width: 330px;
+    max-width: 400px;
     padding: 15px;
     margin: 0 auto;
+}
+
+#img-logo{
+    width: 48px;
+    height: 48px;
+    float: left;
+    margin-right: 10px;
+}
+
+#show-profile{
+
 }

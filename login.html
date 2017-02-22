@@ -32,10 +32,11 @@
 <div class="container">
 
     <form class="form-signin" onsubmit="return false">
-        <center>
+        <div style="text-align: center;">
             <img src="img/flash_icon_250.png">
-        </center>
-        <h2 class="form-signin-heading">Please sign in</h2>
+        </div>
+        <h2 class="form-signin-heading">Please sign in. Status:   <span id="server-status" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </h2>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Password</label>
@@ -47,6 +48,7 @@
         </div>
         <button class="btn btn-lg btn-primary btn-block" id="buttonLogin" >Sign in</button>
     </form>
+
 
 </div> <!-- /container -->
 
