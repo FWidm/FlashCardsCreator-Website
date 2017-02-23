@@ -102,24 +102,25 @@
                         <div id="answer-1">
                             <h4 class="sub-heading">Answer 1:</h4>
                             <label for="answer-1-text">Answer text:</label>
-                            <textarea class="form-control" rows="5" id="answer-1-text"></textarea>
+                            <textarea class="form-control answer-text" rows="5" id="answer-1-text"></textarea>
 
                             <label for="answer-1-hint">Answer hint text:</label>
-                            <textarea class="form-control" rows="5" id="answer-1-hint"></textarea>
+                            <textarea class="form-control answer-hint" rows="5" id="answer-1-hint"></textarea>
 
                             <label for="answer-1-url">Answer URL:</label>
-                            <input class="form-control" id="answer-1-url">
+                            <input class="form-control answer-url" id="answer-1-url">
 
                             <label>Is the answer correct? (for Multiple Choice cards!)</label><br/>
-                            <label class="radio-inline"><input type="radio" name="answer-1-correct">Correct</label>
-                            <label class="radio-inline"><input type="radio" name="answer-1-correct">False</label>
+                            <label><input class=" answer-correct" type="checkbox" id="answer-1-correct"> Answer is correct</label>
+
                             <hr>
                         </div>
 
 
                     </div>
                     <div class="pull-right">
-                        <button type="button" class="btn btn-danger btn-sm disabled" id="deleteAnswerTemplate">Delete last Answer
+                        <button type="button" class="btn btn-danger btn-sm disabled" id="deleteAnswerTemplate">Delete
+                            last Answer
                         </button>
                         <button type="button" class="btn btn-primary btn-sm" id="addAnswerTemplate">Add another Answer
                         </button>
@@ -127,11 +128,11 @@
                     &nbsp;
                     <h3 class="sub-heading">Additional information:</h3>
                     <div id="others">
-                        <label>Tags</label><br/>
-                        <input class="form-control" id="tags-input">
+                        <label>Tags</label> - please input multiple tags separated by commas. Spaces are not needed.<br/>
+                        <input class="form-control" id="tags-input" type = "text">
                         <label>Is the card a multiple choice card?</label><br/>
-                        <label class="radio-inline"><input type="radio" name="multichoice-option">Yes</label>
-                        <label class="radio-inline"><input type="radio" name="multichoice-option">No</label>
+                        <label><input type="checkbox" id="multiple-choice"> Multiple Choice</label>
+
                         &nbsp;
 
                     </div>
@@ -145,10 +146,16 @@
 
             </div>
 
-            <div class="blog-post">
-
-                <h2 class="blog-post-title">Preview</h2>
-                <pre><code class="json">{"rating": 0,
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Json Preview
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body"> <pre><code class="json">{"rating": 0,
     "question": {
       "questionText": "hello world!",
       "mediaURI": "www.google.de",
@@ -175,8 +182,11 @@
     "selected": false,
     "tags":[{
         "tagId":1
-    }]}</code></pre>
-            </div><!-- /.blog-post -->
+    }]}</code></pre></div>
+                    </div>
+                </div>
+            </div>
+
 
 
         </div><!-- /.blog-main -->

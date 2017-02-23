@@ -1,4 +1,4 @@
-const ip = "localhost";
+const ip = "134.60.51.194";
 const port = "9000";
 const emailCookieName = "userEmail";
 const tokenCookieName = "userToken";
