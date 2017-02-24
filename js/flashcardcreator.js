@@ -8,8 +8,6 @@ $(document).ready(function () {
 
     card.answers = [];
 
-    var cardList;
-
 
 //Add a new Answer
     $("#save").click(function () {
@@ -35,7 +33,7 @@ $(document).ready(function () {
             previewJsonInCodeBlock();
             if (!jsonComplete()) {
                 hideSuccess();
-                showErrorWarning("Please make sure to fill in all the details. Request not sent.");
+                showErrorWarning("<strong>Please make sure to fill in all the details.</strong> Request not sent.");
             }
             else {
                 console.log("Request ready to be sent!");
@@ -48,31 +46,37 @@ $(document).ready(function () {
 
 
     function showErrorWarning(text) {
+        var warning= $('#warning');
         if (text != undefined) {
-            $('#warning').text(text);
+            warning.html(text);
         }
-        if($('#warning').hasClass("hidden"))
-            $('#warning').removeClass("hidden");
+        if(warning.hasClass("hidden"))
+            warning.removeClass("hidden");
 
     }
 
     function hideErrorWarning() {
-        if(!$('#warning').hasClass("hidden"))
-            $('#warning').addClass("hidden");
+        var warning= $('#warning');
+        if(!warning.hasClass("hidden"))
+            warning.addClass("hidden");
     }
 
     function showSuccess(text) {
+        var success= $('#success');
+
         if (text != undefined) {
-            $('#success').text(text);
+            success.html(text);
         }
-        if($('#success').hasClass("hidden"))
-            $('#success').removeClass("hidden");
+        if(success.hasClass("hidden"))
+            success.removeClass("hidden");
 
     }
 
     function hideSuccess() {
-        if(!$('#success').hasClass("hidden"))
-            $('#success').addClass("hidden");
+        var success= $('#success');
+
+        if(!success.hasClass("hidden"))
+            success.addClass("hidden");
     }
 
 
@@ -89,7 +93,7 @@ $(document).ready(function () {
             success: function (data, status, jqXHR) {
                 console.log("status=" + status);
                 console.log(jqXHR);
-                showSuccess("Card has been posted. Card created has id: "+data.id);
+                showSuccess("<strong>Card has been posted.</strong> Card created has id: "+data.id);
             },
             error: function (jqXHR, status) {
                 console.log("status=" + status);
@@ -143,7 +147,7 @@ $(document).ready(function () {
                 + '<label for="answer-' + countAnswers + '-hint">Answer hint text:</label>'
                 + '<textarea class="form-control answer-hint" rows="5" id="answer-' + countAnswers + '-hint"></textarea>'
                 + '<label for="answer-' + countAnswers + '-url">Answer URL:</label>'
-                + '<input class="form-control answer-url" rows="5" id="answer-' + countAnswers + '-url"></input>'
+                + '<input class="form-control answer-url" id="answer-' + countAnswers + '-url"></input>'
                 + '<label>Is the answer correct? (for Multiple Choice cards!)</label><br/>'
                 + '<label><input class=" answer-correct" type="checkbox" id="answer-' + countAnswers + '-correct"> Answer is correct</label>'
                 + '<br/>'
@@ -178,7 +182,7 @@ $(document).ready(function () {
         var id = String(event.target.id);//convert from answer-$number-text to $number.
         var cardId = Number(id.split("-")[1]);
 
-        if (cardId != NaN) {
+        if (!isNaN(cardId)) {
             console.log("TEXT from card: " + cardId + " | type: " + typeof cardId);
             var answerText = $(event.target).val();
             console.log(answerText);
@@ -193,7 +197,7 @@ $(document).ready(function () {
         //convert from answer-$number-text to $number.
         var cardId = Number(id.split("-")[1]);
 
-        if (cardId != NaN) {
+        if (!isNaN(cardId)) {
             console.log("TEXT from card: " + cardId + " | type: " + typeof cardId);
             var answerHint = $(event.target).val();
             console.log(answerHint);
@@ -208,7 +212,7 @@ $(document).ready(function () {
         //convert from answer-$number-text to $number.
         var cardId = Number(id.split("-")[1]);
 
-        if (cardId != NaN) {
+        if (!isNaN(cardId)) {
             console.log("TEXT from card: " + cardId + " | type: " + typeof cardId);
             var answerURI = $(event.target).val();
             console.log(answerURI);
@@ -226,7 +230,7 @@ $(document).ready(function () {
         //convert from answer-$number-text to $number.
         var cardId = Number(id.split("-")[1]);
 
-        if (cardId != NaN) {
+        if (!isNaN(cardId)) {
             console.log("TEXT from card: " + cardId + " | type: " + typeof cardId);
             if (card.answers[cardId] == null)
                 card.answers[cardId] = new Object();
