@@ -34,9 +34,7 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]--><!--navbar-inverse-->
-<div id="warning" class="alert alert-danger" role="alert">
-    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-</div>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -99,19 +97,19 @@
                     <!--Contains all answers,-->
                     <h3 class="sub-heading">Answers</h3>
                     <div id="answers">
-                        <div id="answer-1">
+                        <div id="answer-0">
                             <h4 class="sub-heading">Answer 1:</h4>
-                            <label for="answer-1-text">Answer text:</label>
-                            <textarea class="form-control answer-text" rows="5" id="answer-1-text"></textarea>
+                            <label for="answer-0-text">Answer text:</label>
+                            <textarea class="form-control answer-text" rows="5" id="answer-0-text"></textarea>
 
-                            <label for="answer-1-hint">Answer hint text:</label>
-                            <textarea class="form-control answer-hint" rows="5" id="answer-1-hint"></textarea>
+                            <label for="answer-0-hint">Answer hint text:</label>
+                            <textarea class="form-control answer-hint" rows="5" id="answer-0-hint"></textarea>
 
-                            <label for="answer-1-url">Answer URL:</label>
-                            <input class="form-control answer-url" id="answer-1-url">
+                            <label for="answer-0-url">Answer URL:</label>
+                            <input class="form-control answer-url" id="answer-0-url">
 
                             <label>Is the answer correct? (for Multiple Choice cards!)</label><br/>
-                            <label><input class=" answer-correct" type="checkbox" id="answer-1-correct"> Answer is correct</label>
+                            <label><input class=" answer-correct" type="checkbox" id="answer-0-correct"> Answer is correct</label>
 
                             <hr>
                         </div>
@@ -138,12 +136,14 @@
                     </div>
                     &nbsp;
                     <div class="pull-right">
-                        <button type="button" class="btn btn-default btn-lg disabled" id="saveFormButton">Save
+                        <button type="button" class="btn" id="save">Save
                         </button>
                     </div>
                 </div>
                 &nbsp;
-
+                <div id="warning" class="alert alert-danger" role="alert">
+                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                </div>
             </div>
 
             <div class="panel-group">
@@ -155,7 +155,7 @@
                         </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body"> <pre><code class="json">{"rating": 0,
+                        <div class="panel-body"> <pre><code id="json-output" class="json">{"rating": 0,
     "question": {
       "questionText": "hello world!",
       "mediaURI": "www.google.de",
@@ -210,7 +210,8 @@
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
 
 <script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/flashcardcreator.js"></script>
 <script src="js/main.js"></script>
+<script src="js/flashcardcreator.js"></script>
+
 </body>
 </html>

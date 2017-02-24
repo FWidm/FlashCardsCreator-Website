@@ -58,6 +58,7 @@ $(function () {
 });
 
 
+
 function checkCredentials(email, password) {
     var json = JSON.stringify({"email": email, "password": password});
     console.log(json);
