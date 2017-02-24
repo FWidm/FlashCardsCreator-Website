@@ -15,9 +15,10 @@ $(document).ready(function () {
     $("#save").click(function () {
             console.log("Save");
             //set to default if not set
-            if (card.multiChoice == undefined) {
-                card.multiChoice = false;
+            if (card.multipleChoice == undefined) {
+                card.multipleChoice = false;
             }
+            card.rating=0;
             var count = 0;
             do {
                 if (card.answers[count] == undefined) {
@@ -33,15 +34,74 @@ $(document).ready(function () {
             //console.log(JSON.stringify(card));
             previewJsonInCodeBlock();
             if (!jsonComplete()) {
-                showWarning("Please make sure to fill in all the details. Request not sent.");
+                hideSuccess();
+                showErrorWarning("Please make sure to fill in all the details. Request not sent.");
             }
             else {
                 console.log("Request ready to be sent!");
-                hideWarning();
+                hideErrorWarning();
+                PostNewCard();
             }
 
         }
     );
+
+
+    function showErrorWarning(text) {
+        if (text != undefined) {
+            $('#warning').text(text);
+        }
+        if($('#warning').hasClass("hidden"))
+            $('#warning').removeClass("hidden");
+
+    }
+
+    function hideErrorWarning() {
+        if(!$('#warning').hasClass("hidden"))
+            $('#warning').addClass("hidden");
+    }
+
+    function showSuccess(text) {
+        if (text != undefined) {
+            $('#success').text(text);
+        }
+        if($('#success').hasClass("hidden"))
+            $('#success').removeClass("hidden");
+
+    }
+
+    function hideSuccess() {
+        if(!$('#success').hasClass("hidden"))
+            $('#success').addClass("hidden");
+    }
+
+
+    function PostNewCard() {
+        jQuery.ajax({
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+getCookie(tokenCookieName)
+            },
+            type: 'POST',
+            url: "http://" + ip + ":" + port + "/cards",
+            data: JSON.stringify(card),
+            dataType: 'json',
+            success: function (data, status, jqXHR) {
+                console.log("status=" + status);
+                console.log(jqXHR);
+                showSuccess("Card has been posted. Card created has id: "+data.id);
+            },
+            error: function (jqXHR, status) {
+                console.log("status=" + status);
+
+                console.log(jqXHR.responseText);
+            },
+            contentType: "application/json"
+
+        });
+
+        return false;
+    }
 
     function jsonComplete() {
         var valid = true;
@@ -70,21 +130,8 @@ $(document).ready(function () {
         return valid;
     }
 
-    function showWarning(text) {
-        if (text != undefined) {
-            $('#warning').text(text);
-        }
-        $('#warning').show();
 
-    }
 
-    function hideWarning() {
-        $('#warning').hide();
-    }
-
-    function setWarningText(text) {
-        console.log("Set warning text to: " + text);
-    }
 
     $("#addAnswerTemplate").click(function () {
             console.log("Woop");
@@ -206,7 +253,16 @@ $(document).ready(function () {
     $("#tags-input").change(function () {
         var commaSeparatedTags = "" + $("#tags-input").val();
         //console.log(commaSeparatedTags+ " | type: "+typeof commaSeparatedTags);
-        card.tags = commaSeparatedTags.replace(/\s/g, '').split(',');
+        card.tags =[];
+        var tags = commaSeparatedTags.replace(/\s/g, '').split(',');
+        for(var i=0; i<tags.length; i++){
+            if(tags[i]=="")
+                break;
+            if(card.tags[i]==null){
+                card.tags[i]=new Object();
+            }
+            card.tags[i].tagName=tags[i];
+        }
         console.log(card);
     });
 
@@ -214,7 +270,7 @@ $(document).ready(function () {
     $("#multiple-choice").change(function () {
         var bool = $("#multiple-choice").prop('checked');
         if (bool != null) {
-            card.multiChoice = bool;
+            card.multipleChoice = bool;
             console.log(card);
         }
 
