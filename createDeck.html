@@ -1,0 +1,196 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang=""> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 50px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]--><!--navbar-inverse-->
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img id="img-logo" src="img/flash_icon_250.png">
+            <a class="navbar-brand" href="#">FlashCards Creator</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-header pull-right">
+                <ul class="nav navbar-nav pull-left">
+                    <li>
+                        <a id="show-profile" href="#">Hi, anon!</a>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-right" role="form">
+                    <button type="submit" id="buttonLogout" class="btn btn-success">Log out</button>
+                </form>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">Create a new CardDeck</h1>
+        <p class="lead blog-description">Simple way to create a new CardDeck on your webbrowser.</p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+            <hr>
+
+            <div class="blog-post">
+                <h2 class="blog-post-title">Introduction</h2>
+
+                <p>A CardDeck has several Attributes you need to fill. First you start with the name and description of
+                    the deck.
+                    After that you will pass an array of cards that contains the flashcardIds of the created cards.
+                    Afterwards you will specify the UserGroup that can edit the deck's content.
+                </p>
+                <hr>
+                <h2 class="blog-post-title">Creation:</h2>
+
+                <div class="form-group">
+                    <h3 class="sub-heading">General</h3>
+                    <label for="deck-name">Deck name:</label>
+                    <input class="form-control" id="deck-name">
+
+                    <label for="deck-description">Deck description:</label>
+                    <input class="form-control" id="deck-description">
+
+                    <hr>
+                    <!--Contains all answers,-->
+                    <h3 class="sub-heading">Cards</h3>
+                    <div id="cards">
+                        <div id="answer-0">
+                            <label for="deck-card-ids">Card IDs:</label>
+                            <input class="form-control answer-url" id="deck-card-ids">
+
+                        </div>
+                        <hr>
+
+                    </div>
+                    <!--<div class="pull-right">-->
+                    <!--<button type="button" class="btn btn-danger btn-sm disabled" id="deleteAnswerTemplate">Delete-->
+                    <!--last Answer-->
+                    <!--</button>-->
+                    <!--<button type="button" class="btn btn-primary btn-sm" id="addAnswerTemplate">Add another Answer-->
+                    <!--</button>-->
+                    <!--</div>-->
+
+                    <h3 class="sub-heading">Additional information:</h3>
+                    <div id="others">
+                        <label for="tags-input">Tags</label> - please input multiple tags separated by commas. Spaces
+                        are not needed.<br/>
+                        <input class="form-control" id="tags-input" type="text">
+                        <label>Is the card a multiple choice card?</label><br/>
+                        <label><input type="checkbox" id="multiple-choice"> Multiple Choice</label>
+
+
+                    </div>
+                    &nbsp;
+
+                    <div class="pull-right">
+                        <button type="button" class="btn" id="save">Save
+                        </button>
+                    </div>
+                </div>
+                &nbsp;
+                <div id="warning" class="alert alert-danger hidden" role="alert">
+                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                </div>
+                <div id="success" class="alert alert-success hidden" role="alert">
+                    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Json Preview
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in">
+                        <div class="panel-body"> <pre><code id="json-output" class="json">{
+    "cardDeckName": "name",
+    "cardDeckDescpription": "description",
+    "cards": [
+              {
+        "flashcardId": 1
+      },
+      {
+        "flashcardId": 2
+      }
+    ],
+    "userGroup":{
+        "groupId":1
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>Quicklinks</h4>
+                <ol class="list-unstyled">
+                    <li><a href="createCard.html">Create Cards</a></li>
+                    <li><a href="#">Create Categories</a></li>
+                </ol>
+            </div>
+        </div><!-- /.blog-sidebar -->
+
+    </div><!-- /.row -->
+
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
+
+<script src="js/vendor/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/deckcreator.js"></script>
+
+</body>
+</html>

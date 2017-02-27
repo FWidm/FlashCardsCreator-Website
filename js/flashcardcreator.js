@@ -103,8 +103,6 @@ $(document).ready(function () {
             contentType: "application/json"
 
         });
-
-        return false;
     }
 
     function jsonComplete() {
