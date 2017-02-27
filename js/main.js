@@ -16,10 +16,10 @@ $(document).ready(function () {
         getHeartbeat();
 
         var cookie = getCookie(emailCookieName);
-        console.log(cookie);
+        console.log("emailcookie="+cookie);
         if (!cookie && window.location.pathname != '/FlashCardsCreator/login.html') {
             console.log("Redirect to login!");
-            window.location.href = "login.html";
+            //window.location.href = "login.html";
         }
         else
             $("#show-profile").text("Hi, " + getCookie(emailCookieName));
