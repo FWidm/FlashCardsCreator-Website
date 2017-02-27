@@ -16,10 +16,11 @@ $(document).ready(function () {
         getHeartbeat();
 
         var cookie = getCookie(emailCookieName);
-        console.log("emailcookie="+cookie);
-        if (!cookie && window.location.pathname != '/FlashCardsCreator/login.html') {
+        console.log("emailcookie"+cookie);
+        console.log("contains login? "+(window.location.pathname.includes('login.html')));
+        if (!cookie && !window.location.pathname.includes('login.html')) {
             console.log("Redirect to login!");
-            //window.location.href = "login.html";
+            window.location.href = "login.html";
         }
         else
             $("#show-profile").text("Hi, " + getCookie(emailCookieName));
@@ -55,7 +56,7 @@ $(document).ready(function () {
             deleteCookie(emailCookieName);
             deleteCookie(tokenCookieName);
             //todo: logout from the api.
-            //window.location.href = "login.html";
+            window.location.href = "login.html";
         })
     });
 
@@ -123,7 +124,7 @@ $(document).ready(function () {
                 console.log("id=" + data[0].userId);
                 console.log(jqXHR);
                 createCookie(userIDCokieName,data[0].userId,cookieDuration);
-                //window.location.href = "index.html";
+                window.location.href = "index.html";
             },
             error: function (jqXHR, status) {
                 console.log("status=" + status);
