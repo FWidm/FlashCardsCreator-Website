@@ -4,10 +4,11 @@
     margin: 0 auto;
 }
 
-.navbar{
-    padding: 10px 0px 10px 0px;
+.navbar {
+    padding: 5px 0px 5px 0px;
 }
-#img-logo{
+
+#img-logo {
     width: 48px;
     height: 48px;
     float: left;
@@ -20,10 +21,11 @@
     border-radius: 4px;
 }
 
-#jumbotron-image{
+#jumbotron-image {
     background-color: #488484;
     color: white;
 }
+
 .hljs {
     background: none !important;
 }
@@ -32,6 +34,12 @@
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background: #e6e6e6;
+    background-image: linear-gradient(to bottom, #84c7c7 0, #4e8888 100%);
+    border-color: #366969;
 }
 
 textarea {
