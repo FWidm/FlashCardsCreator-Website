@@ -59,21 +59,6 @@ $(document).ready(function () {
         })
     });
 
-    function showErrorWarning(text) {
-        var warning= $('#warning');
-        if (text != undefined) {
-            warning.html(text);
-        }
-        if(warning.hasClass("hidden"))
-            warning.removeClass("hidden");
-
-    }
-
-    function hideErrorWarning() {
-        var warning= $('#warning');
-        if(!warning.hasClass("hidden"))
-            warning.addClass("hidden");
-    }
 
     function checkCredentials(email, password) {
         var json = JSON.stringify({"email": email, "password": password});
@@ -107,8 +92,6 @@ $(document).ready(function () {
             contentType: "application/json"
 
         });
-
-        return false;
     }
 
     function getUserId(email) {
@@ -197,3 +180,19 @@ function deleteCookie(name) {
     createCookie(name, "", -1);
 }
 
+
+function showErrorWarning(text) {
+    var warning= $('#warning');
+    if (text != undefined) {
+        warning.html(text);
+    }
+    if(warning.hasClass("hidden"))
+        warning.removeClass("hidden");
+
+}
+
+function hideErrorWarning() {
+    var warning= $('#warning');
+    if(!warning.hasClass("hidden"))
+        warning.addClass("hidden");
+}

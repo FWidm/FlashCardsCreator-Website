@@ -12,10 +12,15 @@ $(document).ready(function () {
 
     $("#save").click(function () {
             console.log("Save");
-            previewJsonInCodeBlock(deck);
+            if (deckJSONComplete(deck)) {
+                postGroup(userGroup);
+            }
+            else{
+                hideSuccess();
+                showErrorWarning("<strong>Please make sure to fill in all the details.</strong> Request not sent.");
+            }
         }
     );
-
 
 
     $('#cards').on('click', '.list-group-item', function () {
@@ -29,7 +34,7 @@ $(document).ready(function () {
             deck.cards = [];
         //if the element is undefined, create it with the value true.
         if (deck.cards[arrPosition] == undefined) {
-            deck.cards[arrPosition] = new Object();
+            deck.cards[arrPosition] = {};
 
             deck.cards[arrPosition].flashcardId = cardId;
         }
@@ -79,20 +84,112 @@ function getKey(object, value) {
 function previewJsonInCodeBlock(object) {
     console.log(object);
     //remove all null values from our deck's cards array
-    deck.cards = $.grep(object.cards, function (n) {
-        return n == 0 || n
-    });
+    if (deck.cards != undefined) {
+        deck.cards = $.grep(object.cards, function (n) {
+            return n == 0 || n
+        });
+    }
+
 
     $('#json-output').text(JSON.stringify(deck, null, 4));
     $('code').each(function (i, block) {
         hljs.highlightBlock(block);
     });
 }
+function showSuccess(text) {
+    var success = $('#success');
+
+    if (text != undefined) {
+        success.html(text);
+    }
+    if (success.hasClass("hidden"))
+        success.removeClass("hidden");
+
+}
+
+function hideSuccess() {
+    var success = $('#success');
+
+    if (!success.hasClass("hidden"))
+        success.addClass("hidden");
+}
+
+function deckJSONComplete(deck) {
+    var valid = true;
+    //question
+    console.log(deck);
+    if (deck.cardDeckDescpription == undefined || deck.cardDeckName == undefined || deck.cards == undefined) {
+        valid = false;
+    }
+    return valid;
+}
+
+function postDeck(deck) {
+    console.log(JSON.stringify(userGroup));
+    jQuery.ajax({
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie(tokenCookieName)
+
+        },
+        type: 'POST',
+        url: "http://" + ip + ":" + port + "/cardDecks",
+        data: JSON.stringify(deck),
+        dataType: 'json',
+        success: function (data, status, jqXHR) {
+            console.log("status=" + status);
+            console.log(jqXHR);
+            //show success
+            showSuccess("<strong>Deck has been posted.</strong> Deck created has id: " + data.id);
+        },
+        error: function (jqXHR, status) {
+            console.log("status=" + status);
+            var responsejson = jQuery.parseJSON(jqXHR.responseText);
+            showErrorWarning(responsejson.description);
+            //console.log(responsejson);
+        },
+        contentType: "application/json"
+    });
+}
+
+function postGroup(group) {
+    userGroup.users = [];
+    userGroup.users[0] = {};
+    userGroup.users[0].userId = getCookie(userIDCokieName);
+    console.log(JSON.stringify(userGroup));
+    jQuery.ajax({
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie(tokenCookieName)
+
+        },
+        type: 'POST',
+        url: "http://" + ip + ":" + port + "/groups",
+        data: JSON.stringify(group),
+        dataType: 'json',
+        success: function (data, status, jqXHR) {
+            console.log("status=" + status);
+            console.log(jqXHR);
+            deck.userGroup = {};
+            deck.userGroup.groupId = data.id;
+            console.log("deck.userGroup.id=" + deck.userGroup.groupId);
+            previewJsonInCodeBlock(deck);
+            postDeck(deck);
+        },
+        error: function (jqXHR, status) {
+            console.log("status=" + status);
+            var responsejson = jQuery.parseJSON(jqXHR.responseText);
+            showErrorWarning(responsejson.description);
+            //console.log(responsejson);
+        },
+        contentType: "application/json"
+    });
+}
 
 function getUnassignedCards() {
     jQuery.ajax({
         type: "GET",
-        url: "http://" + ip + ":" + port + "/cards?user=" + getCookie(userIDCokieName) + "&deck=null",
+        url: "http://" + ip + ":" + port + "/cards?authorId=" + getCookie(userIDCokieName) + "&deckId=null",
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data, status, jqXHR) {
@@ -115,6 +212,7 @@ function getUnassignedCards() {
         },
         error: function (jqXHR, status) {
             console.log("status=" + status);
+            console.log(jqXHR);
 
         }
     });
