@@ -198,14 +198,19 @@ function getUnassignedCards() {
             cards = data;
             //empty the div.
             $('#list-cards').empty();
-            for (var key in cards) {
-                //console.log(card=cards[key]);
-                // console.log("id="+(id)+", text:"+cards[key].question.questionText);
-                cardPositionToId.push(cards[key].flashcardId);
-                addCardsToListView(cards[key].flashcardId, cards[key].question.questionText)
 
+            if(cards.length>0) {
+                for (var key in cards) {
+                    //console.log(card=cards[key]);
+                    // console.log("id="+(id)+", text:"+cards[key].question.questionText);
+                    cardPositionToId.push(cards[key].flashcardId);
+                    addCardsToListView(cards[key].flashcardId, cards[key].question.questionText)
+
+                }
+                console.log(cardPositionToId);
             }
-            console.log(cardPositionToId);
+            else
+                    $('#list-cards').append("<p><strong>No unassigned cards could be found. <a href='createCard.html'> Please crate cards first.</strong></p>");
 
             console.log(jqXHR);
 
@@ -225,5 +230,4 @@ function addCardsToListView(id, questionText) {
         + '</div><p class="mb-1"><strong>Question:</strong> ' + questionText + '</p></a></div>';
     // console.log("adding... "+html);
     $('#list-cards').append(html);
-
 }
