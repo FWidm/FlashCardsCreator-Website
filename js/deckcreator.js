@@ -13,9 +13,15 @@ $(document).ready(function () {
     $("#save").click(function () {
             console.log("Save");
             if (deckJSONComplete(deck)) {
+                //remove all null values from our deck's cards array
+                if (deck.cards != undefined) {
+                    deck.cards = $.grep(deck.cards, function (n) {
+                        return n == 0 || n
+                    });
+                }
                 postGroup(userGroup);
             }
-            else{
+            else {
                 hideSuccess();
                 showErrorWarning("<strong>Please make sure to fill in all the details.</strong> Request not sent.");
             }
@@ -33,14 +39,15 @@ $(document).ready(function () {
         if (deck.cards == undefined)
             deck.cards = [];
         //if the element is undefined, create it with the value true.
-        if (deck.cards[arrPosition] == undefined) {
+        if (deck.cards[arrPosition] == undefined || deck.cards[arrPosition].flashcardId == null) {
+            console.log("was undefined");
             deck.cards[arrPosition] = {};
-
             deck.cards[arrPosition].flashcardId = cardId;
         }
-        else //if we unselect the element, we splice it from the array so that it only contains values we work with
+        else {//if we unselect the element, we splice it from the array so that it only contains values we work with
+            console.log("set null");
             deck.cards[arrPosition].flashcardId = null;
-
+        }
         console.log("toggled card: " + cardId + " | value=" + deck.cards[arrPosition].flashcardId);
     });
 
@@ -83,12 +90,7 @@ function getKey(object, value) {
 
 function previewJsonInCodeBlock(object) {
     console.log(object);
-    //remove all null values from our deck's cards array
-    if (deck.cards != undefined) {
-        deck.cards = $.grep(object.cards, function (n) {
-            return n == 0 || n
-        });
-    }
+
 
 
     $('#json-output').text(JSON.stringify(deck, null, 4));
@@ -118,7 +120,7 @@ function deckJSONComplete(deck) {
     var valid = true;
     //question
     console.log(deck);
-    if (deck.cardDeckDescpription == undefined || deck.cardDeckName == undefined || deck.cards == undefined) {
+    if (deck.cardDeckDescpription == undefined || deck.cardDeckName == undefined) {
         valid = false;
     }
     return valid;
@@ -140,6 +142,7 @@ function postDeck(deck) {
             console.log("status=" + status);
             console.log(jqXHR);
             //show success
+            hideErrorWarning();
             showSuccess("<strong>Deck has been posted.</strong> Deck created has id: " + data.id);
         },
         error: function (jqXHR, status) {
@@ -199,7 +202,7 @@ function getUnassignedCards() {
             //empty the div.
             $('#list-cards').empty();
 
-            if(cards.length>0) {
+            if (cards.length > 0) {
                 for (var key in cards) {
                     //console.log(card=cards[key]);
                     // console.log("id="+(id)+", text:"+cards[key].question.questionText);
@@ -210,7 +213,7 @@ function getUnassignedCards() {
                 console.log(cardPositionToId);
             }
             else
-                    $('#list-cards').append("<p><strong>No unassigned cards could be found. <a href='createCard.html'> Please crate cards first.</strong></p>");
+                $('#list-cards').append("<p><strong>No unassigned cards could be found. <a href='createCard.html'> Please crate cards first.</strong></p>");
 
             console.log(jqXHR);
 
